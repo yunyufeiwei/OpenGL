@@ -76,8 +76,8 @@
     <LibraryPath>X:\Graphics\OpenGL\01-CreateWindow\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>X:\Graphics\OpenGL\01-CreateWindow\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>X:\Graphics\OpenGL\01-CreateWindow\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>X:\Graphics\OpenGL\01-CreateWindow\Libraries\include;$(IncludePath)</IncludePath>
@@ -129,7 +129,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>X:\Graphics\OpenGL\01-CreateWindow\Libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32.lib;soil2-debug.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
