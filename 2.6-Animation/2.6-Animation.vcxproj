@@ -154,8 +154,8 @@
     <ClCompile Include="Animation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragShader.glsl" />
-    <None Include="vertShader.glsl" />
+    <None Include="glsl\fragShader.glsl" />
+    <None Include="glsl\vertShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,7 +11,7 @@ using namespace std;
 GLuint renderingProgram;
 GLuint vao[numVAOs];
 
-//读取文件
+//读取文件的方法(通过文件名)
 string readFile(const char* filePath)
 {
 	string content;
@@ -67,7 +67,7 @@ void init(GLFWwindow* window)
 void display(GLFWwindow* window , double currentTime)
 {
 	glUseProgram(renderingProgram);
-	glPointSize(30.0f);
+	glPointSize(5.0f);
 	glDrawArrays(GL_POINTS, 0, 1);
 }
 

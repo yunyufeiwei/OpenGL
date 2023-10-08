@@ -95,9 +95,11 @@ void main()
 
 	init(window);
 
+	//渲染循环
 	while (!glfwWindowShouldClose(window))
 	{
 		display(window, glfwGetTime());
+
 		//后置缓缓冲区与前置缓冲区交换
 		glfwSwapBuffers(window);
 		glfwPollEvents();

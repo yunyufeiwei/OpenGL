@@ -43,12 +43,16 @@ int main(void)
 
 	init(window);
 
+
+	//渲染循环
 	while (!glfwWindowShouldClose(window))
 	{
 		//执行显示函数
 		display(window, glfwGetTime());
+
 		//后置缓缓冲区与前置缓冲区交换
 		glfwSwapBuffers(window);
+
 		//处理窗口相关事件（如案件事件）
 		glfwPollEvents();
 	}

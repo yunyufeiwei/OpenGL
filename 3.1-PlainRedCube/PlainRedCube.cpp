@@ -122,6 +122,7 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		display(window, glfwGetTime());
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

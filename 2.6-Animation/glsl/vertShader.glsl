@@ -1,5 +1,6 @@
 #version 430
 
+//定义一个位移值，将所有的顶点都加上这个值
 uniform float offset;
 
 void main(void)

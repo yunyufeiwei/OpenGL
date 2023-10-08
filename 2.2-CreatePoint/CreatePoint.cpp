@@ -11,11 +11,12 @@ GLuint renderingProgram;
 //顶一个burrfer的缓冲区，OpenGL至少要定义一个
 GLuint vao[numVAOs];
 
+
 //定义着色器函数
 GLuint createShaderProgram()
 {
 	//定义字符串为vshaderSource的顶点着色器
-	const char * vshaderSource = 
+	const char* vshaderSource = 
 		"#version 430    \n"
 		"void main(void) \n"
 		"{ gl_Position = vec4(0.0, 0.0, 0.0, 1.0); }";
@@ -45,12 +46,12 @@ GLuint createShaderProgram()
 	//将着色器加入程序对象
 	glAttachShader(vfprogram, vShader);
 	glAttachShader(vfprogram, fShader);
+
 	//请求GLSL编译器确保兼容性
 	glLinkProgram(vfprogram);
 
 	return vfprogram;
-	
-}
+	}
 
 //定义窗口的函数
 void init(GLFWwindow* window)
@@ -68,7 +69,8 @@ void display(GLFWwindow* window, double currentTime)
 	glUseProgram(renderingProgram);
 
 	//设置渲染点的大小
-	glPointSize(20.0f);
+	glPointSize(5.0f);
+
 	//绘制图元，第一个参数绘制模式(点、线、三角形)，第二个参数指定数组的起始索引，第三个参数指定要呈现的索引数量（例如：如果有3个点，那就是3）
 	glDrawArrays(GL_POINTS, 0, 1);
 }
@@ -100,13 +102,17 @@ int main(void)
 
 	while (!glfwWindowShouldClose(window))
 	{
+		
 		display(window, glfwGetTime());
 		//后置缓缓冲区与前置缓冲区交换
 		glfwSwapBuffers(window);
+		
+		//处理窗口相关事件（比如键盘输入、鼠标移动）、更新窗口状态，并调用对应的回调函数
 		glfwPollEvents();
 	}
 
 	glfwDestroyWindow(window);
+	//当渲染循环结束后，需要正确释放/删除之前分配的所有资源，可以在main函数的最后调用glfwTerminate函数来完成。
 	glfwTerminate();
 	exit(EXIT_SUCCESS);
 }

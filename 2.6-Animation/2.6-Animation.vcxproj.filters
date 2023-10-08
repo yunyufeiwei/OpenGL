@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertShader.glsl">
+    <None Include="glsl\fragShader.glsl">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="fragShader.glsl">
+    <None Include="glsl\vertShader.glsl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
