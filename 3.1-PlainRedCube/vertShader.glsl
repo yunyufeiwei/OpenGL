@@ -1,5 +1,6 @@
 #version 430
 
+//in关键字表示这个顶点属性将会从缓冲区中接受数值
 layout(location = 0) in vec3 position;
 
 uniform mat4 mv_matrix;

@@ -10,7 +10,9 @@ using namespace std;
 #include <glm/gtc/matrix_transform.hpp>
 #include "Utils.h"
 
+//定义顶点数组对象
 #define numVAOs 1
+//定义顶点缓冲对象
 #define numVBOs 2
 
 Utils util = Utils();
@@ -47,11 +49,13 @@ void setupVertices(void)
 		1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f, -1.0f
 	};
 
+	//创建VAO，绑定VAO，这样生成的缓冲区就会和这个VAO相关联
 	glGenVertexArrays(1, vao);
 	glBindVertexArray(vao[0]);
+	//创建VBO、绑定VBO
 	glGenBuffers(numVBOs, vbo);
-
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+	//将包含顶点数据的数组赋值进活跃缓冲区（这里应该是第0个VBO）
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
 };
 
@@ -119,6 +123,7 @@ int main(void)
 	//执行初始化函数，需要传window的参数进来
 	init(window);
 
+	//渲染循环
 	while (!glfwWindowShouldClose(window))
 	{
 		display(window, glfwGetTime());
