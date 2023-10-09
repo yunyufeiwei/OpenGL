@@ -14,6 +14,7 @@ using namespace std;
 
 Utils::Utils(){}
 
+//
 string Utils::readShaderFile(const char* filePath)
 {
 	string content;
@@ -88,7 +89,7 @@ GLuint Utils::prepareShader(int shaderTYPE, const char* shaderPath)
 	return shaderRef;
 }
 
-//当GLSL链接失败时，显示OpenGL日志内容
+//当GLSL链接着色器失败时，显示OpenGL日志内容
 void Utils::printProgramLog(int prog)
 {
 	int len = 0;
@@ -152,6 +153,7 @@ GLuint Utils::createShaderProgram(const char *vp, const char *gp, const char * f
 	return vfprogram;
 }
 
+//创建顶点、曲面细分、片段着色器程序
 GLuint Utils::createShaderProgram(const char* vp, const char* tCS, const char* tES, const char* fp)
 {
 	GLuint vShader = prepareShader(GL_VERTEX_SHADER, vp);
@@ -167,6 +169,7 @@ GLuint Utils::createShaderProgram(const char* vp, const char* tCS, const char* t
 	return vtfprogram;
 }
 
+//创建顶点、曲面细分、几何、判断着色器程序
 GLuint Utils::createShaderProgram(const char* vp, const char* tCS, const char* tES, const char* gp, const char* fp)
 {
 	GLuint vShader = prepareShader(GL_VERTEX_SHADER, vp);

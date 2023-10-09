@@ -27,4 +27,12 @@
       <Filter>资源文件</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="vertShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="fragShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
 </Project>

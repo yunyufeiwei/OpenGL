@@ -65,7 +65,7 @@ void init(GLFWwindow* window)
 	aspect = (float)width / (float)height;
 	pMat = glm::perspective(1.0472f, aspect, 0.1f, 1000.0f);   //1.0472 radians = 60 degrees  glm::perspective(<filed of view> , <aspect ratio> , <near plane>)
 
-	cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;  //设置相机的位置，cameraZ表示了看向cube的距离
+	cameraX = 0.0f; cameraY = 0.0f; cameraZ = 32.0f;  //设置相机的位置，cameraZ表示了看向cube的距离
 	setupVertices();
 }
 
@@ -140,6 +140,7 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		display(window, glfwGetTime());
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

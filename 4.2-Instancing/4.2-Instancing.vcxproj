@@ -155,11 +155,11 @@
     <ClCompile Include="Instancing.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\3.3-Tumbling\fragShader.glsl" />
-    <None Include="..\3.3-Tumbling\vertShader.glsl" />
+    <ClInclude Include="..\3.3-Tumbling\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\3.3-Tumbling\Utils.h" />
+    <None Include="fragShader.glsl" />
+    <None Include="vertShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -23,16 +23,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\3.3-Tumbling\fragShader.glsl">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="..\3.3-Tumbling\vertShader.glsl">
-      <Filter>资源文件</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\3.3-Tumbling\Utils.h">
       <Filter>资源文件</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="vertShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

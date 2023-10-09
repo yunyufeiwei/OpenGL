@@ -17,6 +17,7 @@ Utils util = Utils();
 float cameraX, cameraY, cameraZ;
 float cubeLocX, cubeLocY, cubeLocZ;
 
+//声明一个渲染程序
 GLuint renderingProgram;
 GLuint vao[numVAOs];
 GLuint vbo[numVBOs];
@@ -57,6 +58,7 @@ void setupVertices(void)
 
 void init(GLFWwindow* window)
 {
+	//声明的渲染程序从Utils.cpp文件中调用封装好的函数方法
 	renderingProgram = Utils::createShaderProgram("vertShader.glsl", "fragShader.glsl");
 
 	//构建透视矩阵
@@ -70,8 +72,9 @@ void init(GLFWwindow* window)
 
 void display(GLFWwindow* window, double currentTime)
 {
-	////每帧之前清除深度缓冲区
+	//每帧之前清除深度缓冲区
 	glClear(GL_DEPTH_BUFFER_BIT);
+	//每帧之前清除颜色缓冲区
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(renderingProgram);

@@ -157,6 +157,10 @@
   <ItemGroup>
     <ClInclude Include="..\3.3-Tumbling\Utils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="fragShader.glsl" />
+    <None Include="vertShader.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

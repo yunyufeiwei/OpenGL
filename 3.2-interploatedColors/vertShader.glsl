@@ -5,6 +5,7 @@ layout(location = 0) in vec3 position;
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 
+//¶¥µãÑÕÉ«
 out vec4 varyingColor;
 
 void main()

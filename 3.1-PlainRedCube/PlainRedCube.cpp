@@ -61,7 +61,9 @@ void setupVertices(void)
 
 void init(GLFWwindow* window)
 {
+	//渲染程序，调用了Utils里面封装好的顶点、片段着色器
 	renderingProgram = Utils::createShaderProgram("vertShader.glsl" , "fragShader.glsl"); 
+
 	cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
 	cubeLocX = 0.0f, cubeLocY = -2.0f, cubeLocZ = 0.0f;
 	setupVertices();
@@ -69,8 +71,10 @@ void init(GLFWwindow* window)
 
 void display(GLFWwindow* window , double currentTime)
 {
-	////每帧之前清除深度缓冲区
+	//每帧之前清除深度缓冲区
 	glClear(GL_DEPTH_BUFFER_BIT);
+
+	//使用glUseProgram()函数来启用着色器
 	glUseProgram(renderingProgram);
 
 	//获取MV矩阵和投影矩阵的统一变量
@@ -100,7 +104,8 @@ void display(GLFWwindow* window , double currentTime)
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	glDrawArrays(GL_TRIANGLES, 0, 36);				//Display()函数做得最后一件事就是通过调用glDrawArrays()来绘制模型，指定模型的组成方式(三角形),并设置顶点数。
+	//Display()函数做得最后一件事就是通过调用glDrawArrays()来绘制模型，指定模型的组成方式(三角形),并设置顶点数。
+	glDrawArrays(GL_TRIANGLES, 0, 36);				
 
 }
 
