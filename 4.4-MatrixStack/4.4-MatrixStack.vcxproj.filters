@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Utils.cpp">
-      <Filter>资源文件</Filter>
+    <ClCompile Include="4.4-MatrixStack.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="4.3-MultipleModels.cpp">
+    <ClCompile Include="Utils.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertShader.glsl">
+    <None Include="fragShader.glsl">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="fragShader.glsl">
+    <None Include="vertShader.glsl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
