@@ -72,6 +72,7 @@ void init(GLFWwindow* window)
 {
 	renderingProgram = Utils::createShaderProgram("vertShader.glsl", "fragShader.glsl");
 
+	//基于优化考虑，将透视矩阵的计算放在初始化阶段
 	glfwGetFramebufferSize(window, &width, &height);
 	aspect = (float)width / (float)height;
 	pMat = glm::perspective(1.0472f, aspect, 0.1f, 1000.0f);
@@ -100,6 +101,8 @@ void display(GLFWwindow* window, double currentTime)
 
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
 
+	glEnable(GL_CULL_FACE);
+
 	//--------金字塔模型==太阳
 	mvStack.push(mvStack.top());
 	mvStack.top() *= glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));		//太阳位置
@@ -115,10 +118,11 @@ void display(GLFWwindow* window, double currentTime)
 	//调整OpenGL设置，绘制模型
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
+	glFrontFace(GL_CW);
 	glDrawArrays(GL_TRIANGLES, 0, 18);				//Display()函数做得最后一件事就是通过调用glDrawArrays()来绘制模型，指定模型的组成方式(三角形),并设置顶点数。
 	mvStack.pop();									//从堆栈中移除太阳的轴旋转
 
-	//-----------------------  cube == planet  
+	//-----------------------  cube == 地球  
 	mvStack.push(mvStack.top());
 	mvStack.top() *= glm::translate(glm::mat4(1.0f), glm::vec3(sin((float)currentTime) * 4.0, 0.0f, cos((float)currentTime) * 4.0));
 	mvStack.push(mvStack.top());
@@ -129,20 +133,22 @@ void display(GLFWwindow* window, double currentTime)
 	glEnableVertexAttribArray(0);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
+	glFrontFace(GL_CW);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	mvStack.pop();
 
-	//-----------------------  smaller cube == moon
+	//-----------------------  smaller cube == 月亮
 	mvStack.push(mvStack.top());
 	mvStack.top() *= glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, sin((float)currentTime) * 2.0, cos((float)currentTime) * 2.0));
 	mvStack.top() *= rotate(glm::mat4(1.0f), (float)currentTime, glm::vec3(0.0, 0.0, 1.0));
-	mvStack.top() *= scale(glm::mat4(1.0f), glm::vec3(0.25f, 0.25f, 0.25f));
+	mvStack.top() *= scale(glm::mat4(1.0f), glm::vec3(0.25f, 0.25f, 0.25f));	//模型矩阵中引入缩放操作
 	glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvStack.top()));
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 	glEnableVertexAttribArray(0);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
+	glFrontFace(GL_CW);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	mvStack.pop(); mvStack.pop(); mvStack.pop();
 	mvStack.pop();  // the final pop is for the view matrix
@@ -172,6 +178,7 @@ int main(void)
 
 	glfwSwapInterval(1);
 
+	//初始化窗口时，执行一下回调函数，修改窗口的改变产生的渲染问题
 	glfwSetWindowSizeCallback(window, window_size_callback);
 
 	//执行初始化函数，需要传window的参数进来
