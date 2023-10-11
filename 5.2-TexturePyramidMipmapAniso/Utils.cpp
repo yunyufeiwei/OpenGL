@@ -190,11 +190,13 @@ GLuint Utils::loadTexture(const char* texImagePath)
 	textureRef = SOIL_load_OGL_texture(texImagePath, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 	if (textureRef == 0) cout << "Didnt find texture file" << texImagePath << endl;
 
-	//绑定纹理、Mipmap 判断各项异性
+	//如果启用国际渐远纹理
 	glBindTexture(GL_TEXTURE_2D, textureRef);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glGenerateMipmap(GL_TEXTURE_2D);
-	if (glewIsSupported("GL_EXT_texture_filter_anisotropic"))
+
+	//如果启用各项异性过滤
+	if (glewIsSupported("GL_EXT_texture_filter_anisotropic"))				//glewIsSupported()调用测试显卡是否支持AF(各项异性过滤)
 	{
 		GLfloat anisoset = 0.0f;
 		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoset);
