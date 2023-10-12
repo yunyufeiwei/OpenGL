@@ -10,10 +10,11 @@ private:
 	std::vector<glm::vec3>normalVecs;
 
 public:
+	ImportedModel();
 	ImportedModel(const char* filePath);
 	int getNumVertices();
 	std::vector<glm::vec3>getVertices();
-	std::vector<glm::vec3>getTextureCoords();
+	std::vector<glm::vec2>getTextureCoords();
 	std::vector<glm::vec3>getNormals();
 };
 
@@ -25,8 +26,12 @@ private:
 	std::vector<float>stVals;
 	std::vector<float>normVals;
 
+	//保存为顶点属性以供后续使用的数值
+	std::vector<float> triangleVerts;
+	std::vector<float> textureCoords;
+	std::vector<float> normals;
+
 public:
-	//保存为顶点属性，以供后续使用的数值
 	ModelImporter();
 	void parseOBJ(const char* filePath);
 	int getNumVertices();

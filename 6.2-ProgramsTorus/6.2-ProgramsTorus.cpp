@@ -20,6 +20,8 @@ Utils util = Utils();
 float cameraX, cameraY, cameraZ;
 float torLocX, torLocY, torLocZ;
 
+float rotAmt = 0.0f;
+
 GLuint renderingProgram;
 GLuint vao[numVAOs];
 GLuint vbo[numVBOs];
@@ -30,7 +32,6 @@ float aspect;
 glm::mat4 pMat, vMat, mMat, mvMat;
 
 GLuint brickTexture;
-float rotAmt = 0.0f;
 
 Torus myTorus(0.5f, 0.2f, 48);
 float toRadians(float degrees) { return (degrees * 2.0f * 3.14159f) / 360.0f; }

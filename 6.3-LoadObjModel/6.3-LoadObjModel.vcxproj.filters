@@ -21,10 +21,24 @@
     <ClCompile Include="ImportedModel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImportedModel.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="Utils.h">
+      <Filter>资源文件</Filter>
     </ClInclude>
+    <ClInclude Include="ImportedModel.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vertShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="fragShader.glsl">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
