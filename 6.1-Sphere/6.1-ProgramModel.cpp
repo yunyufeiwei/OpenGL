@@ -108,7 +108,7 @@ void display(GLFWwindow* window, double currentTime)
 	vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));
 	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(sphLocX, sphLocY, sphLocZ));
 
-	rotAmt += 0.0f;
+	rotAmt += 0.0018f;
 
 	mMat = glm::rotate(mMat, -0.45f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMat = glm::rotate(mMat, rotAmt, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -133,7 +133,7 @@ void display(GLFWwindow* window, double currentTime)
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);		//渲染线框
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);		//渲染线框
 	glDrawArrays(GL_TRIANGLES, 0, mySphere.getNumIndices());
 
 }
