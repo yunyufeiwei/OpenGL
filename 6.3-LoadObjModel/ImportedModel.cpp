@@ -43,7 +43,7 @@ void ModelImporter::parseOBJ(const char* filePath)
 	{
 		getline(fileStream, line);
 		
-		if (line.compare(0, 2, "v ")==0)				//这里的字符v后边要空格一下，否则会报错，折腾了快半小时，无语了
+		if (line.compare(0, 2, "v ") == 0)	//这里的字符v后边要空格一下，否则会报错，折腾了快半小时，无语了(cpmpare通过传入的字符来比较OBJ文件里面的内容，从而传递过来，因为单独输入v会导致判断到vt，因此加入v+空格来准确获取的到顶点为止）
 		{
 			stringstream ss(line.erase(0, 1));
 			ss >> x; ss >> y; ss >> z;
