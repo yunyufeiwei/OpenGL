@@ -24,13 +24,13 @@ float torLocX, torLocY, torLocZ;
 GLuint renderingProgram;
 GLuint vao[numVAOs];
 GLuint vbo[numVBOs];
-GLuint globalAmbLoc, ambLoc, diffLoc, specLoc, posLoc, mAmbLoc, mDiffLoc, mSpecLoc, mShiLoc;	//着色器变量
+GLuint globalAmbLoc, ambLoc, diffLoc, specLoc, posLoc, mambLoc, mdiffLoc, mspecLoc, mshiLoc;	//着色器变量
 
 //声明透视矩阵相关变量
-GLuint mvLoc, projLoc;		//mv矩阵，透视矩阵
+GLuint mvLoc, projLoc, nLoc;		//mv矩阵，透视矩阵
 int width, height;
 float aspect;
-glm::mat4 pMat, vMat, mMat, mvMat;
+glm::mat4 pMat, vMat, mMat, mvMat, invTrMat,rMat;
 
 Torus myTorus(0.5f, 0.2f, 48);
 int numTorusVertices = myTorus.getNumVertices();    //声明模型顶点数据，通过Torus定义来获取顶点数
@@ -40,6 +40,18 @@ int numTorusIndices = myTorus.getNumIndices();      //声明模型顶点索引�
 float lightPos[3];									//光照位置的浮点数组
 glm::vec3 currentLightPos, lightPosV;				//在模型和视觉空间中的光照位置，Vector3f类型
 glm::vec3 initialLightLoc = glm::vec3(5.0f, 2.0f, 2.0f);	//初始化光照位置
+float amt = 0.0f;
+//白光特性
+float globalAmbient[4] = { 0.7f, 0.7f, 0.7f, 1.0f };	//环境光
+float lightAmbient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };		//白光的环境光强为0
+float lightDiffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };		//白光的漫反射颜色为白色（1，1,1,1）
+float lightSpecular[4] = { 1.0f, 1.0f, 1.0f, 1.0f };	//白光的高光颜色为白色（1,1,1,1）
+
+//黄金材质特性
+float* matAmb = Utils::goldAmbient();
+float* matDif = Utils::goldDiffuse();
+float* matSpe = Utils::goldSpecular();
+float  matShi = Utils::goldShininess();
 
 void installLights(glm::mat4 vMatrix)
 {
@@ -49,9 +61,29 @@ void installLights(glm::mat4 vMatrix)
 	lightPos[1] = lightPosV.y;
 	lightPos[2] = lightPosV.z;
 
-	//在着色器中获取光源位置和材质属性
+	//在着色器中获取光源位置和属性
 	globalAmbLoc = glGetUniformLocation(renderingProgram, "goldAmbient");
-	ambLoc = glGetUniformLocation(renderingProgram, "");
+	ambLoc = glGetUniformLocation(renderingProgram, "light.ambient");
+	diffLoc = glGetUniformLocation(renderingProgram, "light.diffuse");
+	specLoc = glGetUniformLocation(renderingProgram, "light.specular");
+	posLoc = glGetUniformLocation(renderingProgram, "light.position");
+	//在着色器中获取材质的属性
+	mambLoc = glGetUniformLocation(renderingProgram, "material.ambient");
+	mdiffLoc = glGetUniformLocation(renderingProgram, "material.diffuse");
+	mspecLoc = glGetUniformLocation(renderingProgram, "material.specular");
+	mshiLoc = glGetUniformLocation(renderingProgram, "material.shininess");
+
+	//在着色器中为光源与材质统一变量赋值
+	glProgramUniform4fv(renderingProgram, globalAmbLoc, 1, globalAmbient);
+	glProgramUniform4fv(renderingProgram, ambLoc, 1, lightAmbient);
+	glProgramUniform4fv(renderingProgram, diffLoc, 1, lightDiffuse);
+	glProgramUniform4fv(renderingProgram, specLoc, 1, lightSpecular);
+	glProgramUniform3fv(renderingProgram, posLoc, 1, lightPos);
+	glProgramUniform4fv(renderingProgram, mambLoc, 1, matAmb);
+	glProgramUniform4fv(renderingProgram, mdiffLoc, 1, matDif);
+	glProgramUniform4fv(renderingProgram, mspecLoc, 1, matSpe);
+	glProgramUniform1f(renderingProgram, mshiLoc, matShi);
+
 }
 
 //顶点数据函数
@@ -66,8 +98,7 @@ void setupVertices(void)
 	std::vector<float> tvalues;
 	std::vector<float> nvalues;
 
-	int numIndices = myTorus.getNumIndices();
-	for (int i = 0; i < numIndices; i++)
+	for (int i = 0; i < myTorus.getNumVertices(); i++)
 	{
 		pvalues.push_back((vert[ind[i]]).x);
 		pvalues.push_back((vert[ind[i]]).y);
@@ -87,10 +118,13 @@ void setupVertices(void)
 	//VBO顶点缓冲对象，需要两个VBO来存储顶点缓存与纹理缓存
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glBufferData(GL_ARRAY_BUFFER, pvalues.size() * 4, &pvalues[0], GL_STATIC_DRAW);
+
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glBufferData(GL_ARRAY_BUFFER, tvalues.size() * 4, &tvalues[0], GL_STATIC_DRAW);
+
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
 	glBufferData(GL_ARRAY_BUFFER, nvalues.size() * 4, &nvalues[0], GL_STATIC_DRAW);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[3]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, ind.size() * 4, &ind[0], GL_STATIC_DRAW);
 }
@@ -117,7 +151,6 @@ void display(GLFWwindow* window, double currentTime)
 {
 	//清除深度缓冲区
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//执行渲染管线
@@ -125,16 +158,27 @@ void display(GLFWwindow* window, double currentTime)
 
 	mvLoc = glGetUniformLocation(renderingProgram, "mv_matrix");			//通过获取顶点着色器中定义的mv_matrix矩阵，赋值给mvLoc变量进行计算
 	projLoc = glGetUniformLocation(renderingProgram, "proj_matrix");		//通过获取顶点着色器中定义的proj_matrix矩阵，赋值给proLoc变量进行计算
+	nLoc = glGetUniformLocation(renderingProgram, "norm_matrix");
 
 	vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));	//计算视图矩阵，通过设置的相机位置来计算视图矩阵
 
-	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(torLocX, torLocY, torLocZ));
-	mMat = glm::rotate(mMat, toRadians(35.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(torLocX, torLocY, torLocZ));	//基于换面位置，构建模型矩阵
+	mMat *= glm::rotate(mMat, toRadians(35.0f), glm::vec3(1.0f, 0.0f, 0.0f));		//旋转换面以便容易看到
+
+	currentLightPos = glm::vec3(initialLightLoc.x, initialLightLoc.y, initialLightLoc.z);
+	//amt += 0.5f;
+	//rMat = glm::rotate(glm::mat4(1.0f), toRadians(amt), glm::vec3(0.0f, 0.0f, 1.0f));
+	//currentLightPos = glm::vec3(rMat * glm::vec4(currentLightPos, 1.0f));
+
+	installLights(vMat);
 
 	mvMat = vMat * mMat;
 
+	invTrMat = glm::transpose(glm::inverse(mvMat));
+
 	glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
+	glUniformMatrix4fv(nLoc, 1, GL_FALSE, glm::value_ptr(invTrMat));
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
