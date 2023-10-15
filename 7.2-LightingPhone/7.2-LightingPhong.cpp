@@ -56,7 +56,7 @@ float* matDif = Utils::goldDiffuse();
 float* matSpe = Utils::goldSpecular();
 float matShi = Utils::goldShininess();
 
-void installLights(glm::mat4 vMatrix) 
+void installLights(glm::mat4 vMatrix)
 {
 	transformed = glm::vec3(vMatrix * glm::vec4(currentLightPos, 1.0));
 	lightPos[0] = transformed.x;

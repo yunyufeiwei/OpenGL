@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Utils.h"
 #include "Torus.h"
+#include "ImportedModel.h"
 using namespace std;
 
 #define numVAOs 1
@@ -25,6 +26,7 @@ float rotAmt = 0.0f;
 GLuint renderingProgram;
 GLuint vao[numVAOs];
 GLuint vbo[numVBOs];
+GLuint shuttleTexture;
 
 GLuint mvLoc, projLoc, nLoc;
 int width, height;
@@ -56,7 +58,9 @@ float* matDif = Utils::goldDiffuse();
 float* matSpe = Utils::goldSpecular();
 float matShi = Utils::goldShininess();
 
-void installLights(glm::mat4 vMatrix) 
+ImportedModel myModel("shuttle.obj");
+
+void installLights(glm::mat4 vMatrix)
 {
 	transformed = glm::vec3(vMatrix * glm::vec4(currentLightPos, 1.0));
 	lightPos[0] = transformed.x;
@@ -89,15 +93,15 @@ void installLights(glm::mat4 vMatrix)
 void setupVertices(void)
 {
 	std::vector<int> ind = myTorus.getIndices();
-	std::vector<glm::vec3> vert = myTorus.getVertices();
-	std::vector<glm::vec2> tex = myTorus.getTexCoords();
-	std::vector<glm::vec3> norm = myTorus.getNormals();
+	std::vector<glm::vec3> vert = myModel.getVertices();
+	std::vector<glm::vec2> tex = myModel.getTextureCoords();
+	std::vector<glm::vec3> norm = myModel.getNormals();
 
 	std::vector<float> pvalues;
 	std::vector<float> tvalues;
 	std::vector<float> nvalues;
 
-	int numIndices = myTorus.getNumIndices();
+	int numIndices = myModel.getNumVertices();
 	for (int i = 0; i < numIndices; i++)
 	{
 		pvalues.push_back((vert[ind[i]]).x);
@@ -141,9 +145,7 @@ void init(GLFWwindow* window)
 	aspect = (float)width / (float)height;
 	pMat = glm::perspective(1.0472f, aspect, 0.1f, 1000.0f);
 
-	//如果直接放在代码同级目录下，直接输入文件名即可
-	//brickTexture = Utils::loadTexture("brick1.jpg");
-	//brickTexture = Utils::loadTexture("brick1.jpg");		//如果在代码同级目录下的文件夹下，使用window的路径方式指定
+	shuttleTexture = Utils::loadTexture("spstob_1.jpg");
 	setupVertices();
 }
 

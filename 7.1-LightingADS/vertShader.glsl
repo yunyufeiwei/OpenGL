@@ -33,7 +33,7 @@ void main(void)
 	vec4 color;
 
 	vec4 P = mv_matrix * vec4(vertPos,1.0f);						//将顶点位置转换到视图空间
-	vec3 N = normalize(norm_matrix * vec4(vertNormal,1.0f)).xyz;	//将法线向量转换到视图空间
+	vec3 N = normalize((norm_matrix * vec4(vertNormal,1.0f)).xyz);	//将法线向量转换到视图空间
 	vec3 L = normalize(light.position - P.xyz);						//计算视图空间下的光照向量（从顶点到光源）	
 
 	vec3 V = normalize(-P.xyz);										//视向量等于视觉空间中的负顶点为止
@@ -45,6 +45,7 @@ void main(void)
 	vec3 diffuse = light.diffuse.xyz * material.diffuse.xyz * max(dot(N,L),0.0f);
 	vec3 specular= light.specular.xyz * material.specular.xyz * pow(max(dot(R,V),0.0f),material.shininess);
 
+	//varyingColor = vec4(vertPos , 1.0) * 0.5 + vec4(0.5 , 0.5 , 0.5 , 0.5);
 	varyingColor = vec4((ambient + diffuse + specular),1.0f);		//将颜色输出发送到片段着色器
 	gl_Position = proj_matrix * mv_matrix * vec4(vertPos,1.0f);		//将顶点位置输出发送到片段着色器
 }

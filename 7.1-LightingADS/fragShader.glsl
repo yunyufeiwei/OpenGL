@@ -1,6 +1,6 @@
-#version 430
-in  vec4 varyingColor;			//´Ó¶¥µã×ÅÉ«Æ÷ÖĞÊäÈëµÄÑÕÉ«
-out vec4 Color;					//Æ¬¶Î×ÅÉ«Æ÷Êä³öµÄÑÕÉ«
+ï»¿#version 430
+in  vec4 varyingColor;			//ä»é¡¶ç‚¹ç€è‰²å™¨ä¸­è¾“å…¥çš„é¢œè‰²
+out vec4 Color;					//ç‰‡æ®µç€è‰²å™¨è¾“å‡ºçš„é¢œè‰²
 
 struct PositionalLight
 {
@@ -23,7 +23,7 @@ uniform PositionalLight light;
 uniform Material material;
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
-uniform mat4 norm_matrix;	//ÓÃ·¨ÏßÀ´±ä»»ÏòÁ¿
+uniform mat4 norm_matrix;	//ç”¨æ³•çº¿æ¥å˜æ¢å‘é‡
 
 void main(void)
 {
