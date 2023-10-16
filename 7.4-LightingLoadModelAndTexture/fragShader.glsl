@@ -48,6 +48,6 @@ void main(void)
 	vec3 diffuse = light.diffuse.xyz * material.diffuse.xyz * max(cosTheta,0.0);
 	vec3 specular = light.specular.xyz * material.specular.xyz * pow(max(cosPhi,0.0), material.shininess);
 
-	Color = texture(samp,tc) * vec4((ambient + diffuse + specular), 1.0);
+	Color = texture(samp,tc);// * vec4((ambient + diffuse + specular), 1.0);
 
 }

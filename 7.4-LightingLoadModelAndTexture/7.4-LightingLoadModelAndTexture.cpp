@@ -9,18 +9,16 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Utils.h"
-#include "Torus.h"
 #include "ImportedModel.h"
 using namespace std;
 
 #define numVAOs 1
-#define numVBOs 4		
+#define numVBOs 3		
 
 Utils util = Utils();
 
 float cameraX, cameraY, cameraZ;
-float torLocX, torLocY, torLocZ;
-
+float objLocX, objLocY, objLocZ;
 float rotAmt = 0.0f;
 
 GLuint renderingProgram;
@@ -33,11 +31,9 @@ int width, height;
 float aspect;
 glm::mat4 pMat, vMat, mMat, mvMat, invTrMat, rMat;
 
-//GLuint brickTexture;
+ImportedModel myModel("shuttle.obj");
 
-Torus myTorus(0.5f, 0.2f, 48);
 float toRadians(float degrees) { return (degrees * 2.0f * 3.14159f) / 360.0f; }
-
 
 //Lighting
 glm::vec3 lightLoc = glm::vec3(5.0f, 2.0f, 2.0f);
@@ -57,8 +53,6 @@ float* matAmb = Utils::goldAmbient();
 float* matDif = Utils::goldDiffuse();
 float* matSpe = Utils::goldSpecular();
 float matShi = Utils::goldShininess();
-
-ImportedModel myModel("shuttle.obj");
 
 void installLights(glm::mat4 vMatrix)
 {
@@ -92,7 +86,6 @@ void installLights(glm::mat4 vMatrix)
 
 void setupVertices(void)
 {
-	std::vector<int> ind = myTorus.getIndices();
 	std::vector<glm::vec3> vert = myModel.getVertices();
 	std::vector<glm::vec2> tex = myModel.getTextureCoords();
 	std::vector<glm::vec3> norm = myModel.getNormals();
@@ -104,14 +97,14 @@ void setupVertices(void)
 	int numIndices = myModel.getNumVertices();
 	for (int i = 0; i < numIndices; i++)
 	{
-		pvalues.push_back((vert[ind[i]]).x);
-		pvalues.push_back((vert[ind[i]]).y);
-		pvalues.push_back((vert[ind[i]]).z);
-		tvalues.push_back((tex[ind[i]]).s);
-		tvalues.push_back((tex[ind[i]]).t);
-		nvalues.push_back((norm[ind[i]]).x);
-		nvalues.push_back((norm[ind[i]]).y);
-		nvalues.push_back((norm[ind[i]]).z);
+		pvalues.push_back((vert[i]).x);
+		pvalues.push_back((vert[i]).y);
+		pvalues.push_back((vert[i]).z);
+		tvalues.push_back((tex[i]).s);
+		tvalues.push_back((tex[i]).t);
+		nvalues.push_back((norm[i]).x);
+		nvalues.push_back((norm[i]).y);
+		nvalues.push_back((norm[i]).z);
 	}
 
 	//VAO顶点数组对象
@@ -122,31 +115,29 @@ void setupVertices(void)
 	//VBO顶点缓冲对象，需要两个VBO来存储顶点缓存与纹理缓存
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glBufferData(GL_ARRAY_BUFFER, pvalues.size() * 4, &pvalues[0], GL_STATIC_DRAW);
-
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glBufferData(GL_ARRAY_BUFFER, tvalues.size() * 4, &tvalues[0], GL_STATIC_DRAW);
-
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
 	glBufferData(GL_ARRAY_BUFFER, nvalues.size() * 4, &nvalues[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[3]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, ind.size() * 4, &ind[0], GL_STATIC_DRAW);
 }
 
 void init(GLFWwindow* window)
 {
 	renderingProgram = Utils::createShaderProgram("vertShader.glsl", "fragShader.glsl");
 
-	cameraX = 0.0f; cameraX = 0.0f; cameraZ = 2.0f;
-	torLocX = 0.0f; torLocY = 0.0f; torLocZ = -1.0f;
+	cameraX = 0.0f; cameraX = 0.0f; cameraZ = 1.5f;
+	objLocX = 0.0f; objLocY = 0.0f; objLocZ = 0.0f;
 
 	//透视矩阵计算放在初始化阶段，可以优化代码
 	glfwGetFramebufferSize(window, &width, &height);
 	aspect = (float)width / (float)height;
 	pMat = glm::perspective(1.0472f, aspect, 0.1f, 1000.0f);
 
-	shuttleTexture = Utils::loadTexture("spstob_1.jpg");
 	setupVertices();
+
+	//如果直接放在代码同级目录下，直接输入文件名即可
+	shuttleTexture = Utils::loadTexture("spstob_1.jpg");		//如果在代码同级目录下的文件夹下，使用window的路径方式指定
 }
 
 void display(GLFWwindow* window, double currentTime)
@@ -162,12 +153,10 @@ void display(GLFWwindow* window, double currentTime)
 	//获取MV矩阵和投影矩阵的统一变量
 	mvLoc = glGetUniformLocation(renderingProgram, "mv_matrix");
 	projLoc = glGetUniformLocation(renderingProgram, "proj_matrix");
-	nLoc = glGetUniformLocation(renderingProgram, "norm_matrix");
 
-	//构建视图矩阵
+	//构建视图矩阵、模型矩阵和视图-模型矩阵
 	vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));
-	//构建模型矩阵
-	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(torLocX, torLocY, torLocZ));
+	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(objLocX, objLocY, objLocZ));
 	mMat *= glm::rotate(mMat, toRadians(35.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 	currentLightPos = glm::vec3(lightLoc.x, lightLoc.y, lightLoc.z);
@@ -189,12 +178,16 @@ void display(GLFWwindow* window, double currentTime)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(1);
+
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
 
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, brickTexture);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, shuttleTexture);
 
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
@@ -203,7 +196,7 @@ void display(GLFWwindow* window, double currentTime)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[3]);
 	//glDrawElements(GL_TRIANGLES, numTorusIndices, GL_UNSIGNED_INT, 0);  //该行代码会出现渲染错误，暂时不清楚具体原因
-	glDrawArrays(GL_TRIANGLES, 0, myTorus.getNumIndices());
+	glDrawArrays(GL_TRIANGLES, 0, myModel.getNumVertices());
 
 }
 
@@ -224,7 +217,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-	GLFWwindow* window = glfwCreateWindow(600, 600, "ProgramModel", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(600, 600, "LoadModel", NULL, NULL);
 	glfwMakeContextCurrent(window);
 
 	if (glewInit() != GLEW_OK)

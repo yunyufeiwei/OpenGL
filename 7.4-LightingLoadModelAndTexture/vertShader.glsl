@@ -1,8 +1,9 @@
 #version 430
 
 layout(location = 0) in vec3 vertPos;
-layout(location = 1) in vec3 vertNormal;
-layout(location = 2) in vec2 texCoord;
+layout(location = 1) in vec2 texCoord;
+layout(location = 2) in vec3 vertNormal;
+
 out vec3 varyingNormal;
 out vec3 varyingLightDir;
 out vec3 varyingVertPos;
@@ -41,7 +42,7 @@ void main(void)
 	varyingVertPos = (mv_matrix * vec4(vertPos , 1.0)).xyz;
 	varyingNormal = (norm_matrix * vec4(vertNormal , 1.0)).xyz;
 	varyingLightDir = light.position - varyingVertPos;
-	tc = texCoord;
 
 	gl_Position = proj_matrix * mv_matrix * vec4(vertPos,1.0f);		//将顶点位置输出发送到片段着色器
+	tc = texCoord;
 }
