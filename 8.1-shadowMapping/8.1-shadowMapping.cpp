@@ -19,12 +19,6 @@ GLuint renderingProgram1, renderingProgram2;
 GLuint vao[numVAOs];
 GLuint vbo[numVBOs];
 
-//声明窗口的宽和高，以及长宽比
-int width, height;
-float aspect;
-
-glm::mat4 pMat;
-
 //金字塔属性
 ImportedModel pyramid("pyr.obj");   //导入金字塔模型
 int numPyramidVertices;             //声明金字塔的顶点数量
@@ -33,6 +27,31 @@ int numPyramidVertices;             //声明金字塔的顶点数量
 Torus myTorus(0.6f, 0.4f, 48);      //声明环形模型大小
 int numTorusVertices;               //声明环形模型顶点数     
 int numTorusIndices;                //声明环形模型顶点索引数
+
+//显示变量分配
+int width, height;                  //声明窗口的宽和高
+float aspect;                       //声明宽高比
+glm::mat4 pMat;
+glm::vec3 currentLightPos, transformed;
+float lightPos[3];
+GLuint globalAmbLoc , ambLoc, diffLoc, specLoc, posLoc, mambLoc, mdiffLoc, mspecLoc, mshiLoc;
+
+//白光
+float globalAmbient[4] = { 0.7f, 0.7f, 0.7f, 1.0f };
+float lightAmbient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+float lightDiffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+float lightSpecular[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+//黄金材质
+float* gMatAmb = Utils::goldAmbient();
+float* gMatDif = Utils::goldDiffuse();
+float* gMatSpe = Utils::goldSpecular();
+float gMatShi = Utils::goldShininess();
+
+void installLights(int renderingProgram, glm::mat4 vMatrix)
+{
+
+}
 
 void setupVertices(void)
 {
@@ -96,6 +115,7 @@ void setupVertices(void)
 //初始化窗口
 void init(GLFWwindow* window)
 {
+    //声明渲染程序，调用了封装在Utils文件里面的方法
     renderingProgram1 = Utils::createShaderProgram("vert1Shader.glsl", "frag1Shader.glsl");
     renderingProgram2 = Utils::createShaderProgram("vert2Shader.glsl", "frag2Shader.glsl");
 
