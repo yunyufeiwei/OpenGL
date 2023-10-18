@@ -18,5 +18,25 @@
     <ClCompile Include="9.3-EnvironmentMapping.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Torus.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vertShader.glsl" />
+    <None Include="fragCubeShader.glsl" />
+    <None Include="fragShader.glsl" />
+    <None Include="vertCubeShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Torus.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

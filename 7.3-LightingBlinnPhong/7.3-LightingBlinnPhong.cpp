@@ -12,37 +12,35 @@
 #include "Torus.h"
 using namespace std;
 
+Utils util = Utils();
+
+float toRadians(float degrees) { return (degrees * 2.0f * 3.14159f) / 360.0f; }
+
 #define numVAOs 1
 #define numVBOs 4		
 
-Utils util = Utils();
-
 float cameraX, cameraY, cameraZ;
 float torLocX, torLocY, torLocZ;
-
-float rotAmt = 0.0f;
 
 GLuint renderingProgram;
 GLuint vao[numVAOs];
 GLuint vbo[numVBOs];
 
+//分配变量
 GLuint mvLoc, projLoc, nLoc;
 int width, height;
 float aspect;
 glm::mat4 pMat, vMat, mMat, mvMat, invTrMat, rMat;
-
-//GLuint brickTexture;
+GLuint globalAmbLoc, ambLoc, diffLoc, specLoc, posLoc, mambLoc, mdiffLoc, mspecLoc, mshiLoc;
+glm::vec3 currentLightPos, transformed;
+float lightPos[3];
 
 Torus myTorus(0.5f, 0.2f, 48);
-float toRadians(float degrees) { return (degrees * 2.0f * 3.14159f) / 360.0f; }
-
+float rotAmt = 0.0f;
 
 //Lighting
 glm::vec3 lightLoc = glm::vec3(5.0f, 2.0f, 2.0f);
-float amt = 0.0f;
-glm::vec3 currentLightPos, transformed;
-float lightPos[3];
-GLuint globalAmbLoc, ambLoc, diffLoc, specLoc, posLoc, mambLoc, mdiffLoc, mspecLoc, mshiLoc;
+
 
 // white light
 float globalAmbient[4] = { 0.7f, 0.7f, 0.7f, 1.0f };
@@ -169,8 +167,8 @@ void display(GLFWwindow* window, double currentTime)
 	mMat *= glm::rotate(mMat, toRadians(35.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 	currentLightPos = glm::vec3(lightLoc.x, lightLoc.y, lightLoc.z);
-	amt += 0.5f;
-	rMat = glm::rotate(glm::mat4(1.0f), toRadians(amt), glm::vec3(0.0f, 0.0f, 1.0f));
+	rotAmt += 0.5f;
+	rMat = glm::rotate(glm::mat4(1.0f), toRadians(rotAmt), glm::vec3(0.0f, 0.0f, 1.0f));
 	currentLightPos = glm::vec3(rMat * glm::vec4(currentLightPos, 1.0f));
 
 	installLights(vMat);
