@@ -72,10 +72,10 @@ glm::mat4 b;                //纹理坐标变换矩阵
 GLuint mvLoc, projLoc, nLoc, sLoc;
 int width, height;                  //声明窗口的宽和高
 float aspect;                       //声明宽高比
-glm::mat4 pMat , vMat, mMat, mvMat, invTrMat;
+glm::mat4 pMat, vMat, mMat, mvMat, invTrMat;
 glm::vec3 currentLightPos, transformed;     //
 float lightPos[3];
-GLuint globalAmbLoc , ambLoc, diffLoc, specLoc, posLoc, mambLoc, mdiffLoc, mspecLoc, mshiLoc;
+GLuint globalAmbLoc, ambLoc, diffLoc, specLoc, posLoc, mambLoc, mdiffLoc, mspecLoc, mshiLoc;
 glm::vec3 origin(0.0f, 0.0f, 0.0f);
 glm::vec3 up(0.0f, 1.0f, 0.0f);
 
@@ -123,7 +123,7 @@ void setupVertices(void)
 
     std::vector<float> pyramidPvalues;
     std::vector<float> pyramidNvalues;
-    for (int i = 0; i < numPyramidVertices; i++) 
+    for (int i = 0; i < numPyramidVertices; i++)
     {
         pyramidPvalues.push_back((vert[i]).x);
         pyramidPvalues.push_back((vert[i]).y);
@@ -143,7 +143,7 @@ void setupVertices(void)
     std::vector<float> torusPvalues;
     std::vector<float> torusNvalues;
 
-    for (int i = 0; i < numTorusVertices; i++) 
+    for (int i = 0; i < numTorusVertices; i++)
     {
         torusPvalues.push_back(vert[i].x);
         torusPvalues.push_back(vert[i].y);
@@ -159,7 +159,7 @@ void setupVertices(void)
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);                                                          //激活缓冲区对象，使用vbo第一个缓冲区
     glBufferData(GL_ARRAY_BUFFER, torusPvalues.size() * 4, &torusPvalues[0], GL_STATIC_DRAW);       //用数据分配和初始化缓冲区对象，分配目标是环形模型顶点数
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);                                                          //激活缓冲区对象，使用vbo第二个缓冲区
     glBufferData(GL_ARRAY_BUFFER, pyramidPvalues.size() * 4, &pyramidPvalues[0], GL_STATIC_DRAW);   //用数据分配和初始化缓冲区对象，分配目标是金字塔模型顶点数
 
@@ -210,9 +210,9 @@ void init(GLFWwindow* window)
 
     setupShadowBuffers(window);
     b = glm::mat4(0.5f, 0.0f, 0.0f, 0.0f,
-                  0.0f, 0.5f, 0.0f, 0.0f,
-                  0.0f, 0.0f, 0.5f, 0.0f,
-                  0.5f, 0.5f, 0.5f, 1.0f);
+        0.0f, 0.5f, 0.0f, 0.0f,
+        0.0f, 0.0f, 0.5f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f);
 }
 
 void display(GLFWwindow* window, double currentTime)
@@ -227,7 +227,7 @@ void display(GLFWwindow* window, double currentTime)
 
     glBindFramebuffer(GL_FRAMEBUFFER, shadowBuffer);
     glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowTex, 0);
-    
+
     glDrawBuffer(GL_NONE);
     glEnable(GL_DEPTH_TEST);
     //减少阴影伪影（阴影痤疮）
