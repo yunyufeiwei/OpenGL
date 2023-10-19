@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{b013872a-96da-4865-9d1b-a9458f42ecf4}</ProjectGuid>
-    <RootNamespace>My105SphereVertexHeightMap</RootNamespace>
+    <ProjectGuid>{24ec1f7a-b573-4674-a20a-7251edd031bf}</ProjectGuid>
+    <RootNamespace>My124TessHeightMappedInstWLighting</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -112,8 +112,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;soil2-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,16 +133,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="10.5-SphereVertexHeightMap.cpp" />
-    <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="12.4-TessHeightMappedInstWLighting.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragShader.glsl" />
+    <None Include="tessCShader.glsl" />
+    <None Include="tessEShader.glsl" />
     <None Include="vertShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sphere.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

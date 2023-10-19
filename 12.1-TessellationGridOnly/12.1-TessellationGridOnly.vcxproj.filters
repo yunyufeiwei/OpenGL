@@ -15,10 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="10.5-SphereVertexHeightMap.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
+    <ClCompile Include="12.1-TessellationGridOnly.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
@@ -26,15 +23,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragShader.glsl" />
-    <None Include="vertShader.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Sphere.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vertShader.glsl" />
+    <None Include="fragShader.glsl" />
+    <None Include="tessEShader.glsl" />
+    <None Include="tessCShader.glsl" />
   </ItemGroup>
 </Project>

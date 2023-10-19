@@ -15,10 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="10.5-SphereVertexHeightMap.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
+    <ClCompile Include="12.4-TessHeightMappedInstWLighting.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
@@ -27,12 +24,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragShader.glsl" />
+    <None Include="tessCShader.glsl" />
+    <None Include="tessEShader.glsl" />
     <None Include="vertShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sphere.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
