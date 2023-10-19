@@ -61,10 +61,12 @@ void setupVertices(void)
 	std::vector<glm::vec3> vert = mySphere.getVertices();
 	std::vector<glm::vec2> tex = mySphere.getTexCoords();
 	std::vector<glm::vec3> norm = mySphere.getNormals();
+	std::vector<glm::vec3> tang = mySphere.getTangents();
 
 	std::vector<float> pvalues;
 	std::vector<float> tvalues;
 	std::vector<float> nvalues;
+	std::vector<float> tanvalues;
 
 	int numIndices = mySphere.getNumIndices();
 	for (int i = 0; i < numIndices; i++)
@@ -77,6 +79,9 @@ void setupVertices(void)
 		nvalues.push_back((norm[ind[i]]).x);
 		nvalues.push_back((norm[ind[i]]).y);
 		nvalues.push_back((norm[ind[i]]).z);
+		tanvalues.push_back((tang[ind[i]]).x);
+		tanvalues.push_back((tang[ind[i]]).y);
+		tanvalues.push_back((tang[ind[i]]).z);
 	}
 
 	//VAO顶点数组对象
@@ -91,6 +96,8 @@ void setupVertices(void)
 	glBufferData(GL_ARRAY_BUFFER, tvalues.size() * 4, &tvalues[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
 	glBufferData(GL_ARRAY_BUFFER, nvalues.size() * 4, &nvalues[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[3]);
+	glBufferData(GL_ARRAY_BUFFER, tanvalues.size() * 4, &tanvalues[0], GL_STATIC_DRAW);
 }
 
 void installLights(glm::mat4 vMatrix) {
@@ -172,6 +179,7 @@ void display(GLFWwindow* window, double currentTime)
 
 	glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
+	glUniformMatrix4fv(nLoc, 1, GL_FALSE, glm::value_ptr(invTrMat));
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -192,8 +200,8 @@ void display(GLFWwindow* window, double currentTime)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, roofTexture);
 
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_CULL_FACE);
+	glDepthFunc(GL_CCW);
 
 	glDrawArrays(GL_TRIANGLES, 0, numSphereVertices);
 
