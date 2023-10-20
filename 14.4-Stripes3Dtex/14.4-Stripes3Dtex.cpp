@@ -78,7 +78,7 @@ int build3DTexture() {
 	return textureID;
 }
 
-void generate3Dpattern() {
+/*void generate3Dpattern() {
 	for (int x = 0; x < texHeight; x++) {
 		for (int y = 0; y < texWidth; y++) {
 			for (int z = 0; z < texDepth; z++) {
@@ -90,8 +90,9 @@ void generate3Dpattern() {
 		}
 	}
 }
+*/
 
-/*
+
 //  replace above function with the one below
 //	to change the stripes to a checkerboard.
 
@@ -112,7 +113,7 @@ void generate3Dpattern() {
 		}
 	}
 }
-*/
+
 
 void setupVertices(void) {
 	numDolphinVertices = dolphinObj.getNumVertices();

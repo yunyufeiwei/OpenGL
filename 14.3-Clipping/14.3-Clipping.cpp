@@ -174,7 +174,7 @@ void display(GLFWwindow* window, double currentTime) {
 	glDrawElements(GL_TRIANGLES, numTorusIndices, GL_UNSIGNED_INT, 0);
 
 	//渲染背面，法向量翻转
-	glUniform1i(flipLoc, 1);
+	glUniform1i(flipLoc, 1);		//顶点着色器中计算了，当法线等于1时，法线翻转
 	glFrontFace(GL_CW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[3]);
 	glDrawElements(GL_TRIANGLES, numTorusIndices, GL_UNSIGNED_INT, 0);

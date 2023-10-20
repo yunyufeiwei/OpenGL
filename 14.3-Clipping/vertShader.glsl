@@ -28,7 +28,7 @@ uniform mat4 proj_matrix;
 uniform mat4 norm_matrix;
 uniform int flipNormal;
 
-//z值表示了裁剪位置
+//裁剪的向量，分别对应了xyz
 vec4 clip_plane = vec4(0.0, 0.0, -1.0f, 0.5);
 
 void main(void)
@@ -38,11 +38,9 @@ void main(void)
 	
 	if (flipNormal==1) varyingNormal = -varyingNormal;
 	
-	varyingHalfVector =
-		normalize(normalize(varyingLightDir)
-		+ normalize(-varyingVertPos)).xyz;
+	varyingHalfVector = normalize(normalize(varyingLightDir) + normalize(-varyingVertPos)).xyz;
 	
-	//gl_ClipDistance[0] = dot(clip_plane.xyz , vertPos) + clip_plane.w;
+	//ax+by+cz+d = 0,参数分别表示垂直于平面的向量(a,b,c)，以及从原点到平面的距离d。可以使用vector4在顶点着色器中指定这样的平面vec4 clip_plane = vec4(0.0f,0.0f,-1.0f,0.2)
 	gl_ClipDistance[0] = dot(clip_plane.xyz, vertPos) + clip_plane.w;
 
 	gl_Position = proj_matrix * mv_matrix * vec4(vertPos,1.0);
