@@ -71,8 +71,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\Libraries\include;$(IncludePath)</IncludePath>
     <LibraryPath>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <ReferencePath>..\Libraries\lib</ReferencePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -113,7 +114,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;soil2-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
