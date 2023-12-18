@@ -18,5 +18,23 @@
     <ClCompile Include="14.7-Clouds.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="HalfSphere.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vertShader.glsl" />
+    <None Include="fragShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HalfSphere.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
