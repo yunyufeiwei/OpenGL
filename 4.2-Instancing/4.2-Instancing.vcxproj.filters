@@ -21,6 +21,9 @@
     <ClCompile Include="..\3.3-Tumbling\Utils.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\4.3-MultipleModels\4.3-MultipleModels.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3.3-Tumbling\Utils.h">

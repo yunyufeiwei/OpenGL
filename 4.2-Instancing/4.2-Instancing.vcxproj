@@ -75,8 +75,8 @@
     <LibraryPath>X:\Graphics\OpenGL\01-CreateWindow\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\GitProject\GraphicProgramming\OpenGL\Libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\GitProject\GraphicProgramming\OpenGL\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>X:\Graphics\OpenGL\01-CreateWindow\Libraries\include;$(IncludePath)</IncludePath>
@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\3.3-Tumbling\Utils.cpp" />
+    <ClCompile Include="..\4.3-MultipleModels\4.3-MultipleModels.cpp" />
     <ClCompile Include="Instancing.cpp" />
   </ItemGroup>
   <ItemGroup>

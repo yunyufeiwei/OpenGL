@@ -72,8 +72,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\GitProject\GraphicProgramming\OpenGL\01-CreateWindow\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\GitProject\GraphicProgramming\OpenGL\Libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\GitProject\GraphicProgramming\OpenGL\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
