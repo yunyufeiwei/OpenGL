@@ -1,4 +1,4 @@
-using namespace std;
+ï»¿using namespace std;
 
 #include<iostream>
 #include<GL/glew.h>
@@ -8,10 +8,12 @@ using namespace std;
 
 #define numVAOs 1
 
+//å®šä¹‰ä¸€ä¸ªæ¸²æŸ“ç¨‹åºç±»å‹
 GLuint renderingProgram;
+//é¡¶ä¸€ä¸ªburrferçš„ç¼“å†²åŒºï¼ŒOpenGLè‡³å°‘è¦å®šä¹‰ä¸€ä¸ª
 GLuint vao[numVAOs];
 
-//¶ÁÈ¡ÎÄ¼ş
+//è¯»å–æ–‡ä»¶
 string readFile(const char* filePath)
 {
 	string content;
@@ -31,7 +33,7 @@ GLuint createShaderProgram()
 {
 	GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-	//´´½¨´æ´¢¶ÔÏó
+	//åˆ›å»ºå­˜å‚¨å¯¹è±¡
 	GLuint vfprogram = glCreateProgram();
 
 	string vertShaderStr = readFile("vertShader.glsl");
@@ -39,18 +41,18 @@ GLuint createShaderProgram()
 	const char* vertShaderSrc = vertShaderStr.c_str();
 	const char* fragShaderSrc = fragShaderStr.c_str();
 
-	//µ÷ÓÃglShaderSource()º¯Êı£¬ÓÃÓÚ½«GLSL´úÂë´Ó×Ö·û´®ÔØÈë¿Õ×ÅÉ«Æ÷¶ÔÏóÖĞ£¬Ö®ºóÔÚÊ¹ÓÃglCompilShader()º¯Êı±àÒë¸÷×ÅÉ«Æ÷
-	//glShaderSourceĞèÒª´«Èë4¸ö²ÎÊı£¬1-ÓÃÀ´´æ·Å×ÅÉ«Æ÷¶ÔÏó£¬2-×ÅÉ«Æ÷Ô´´úÂëÖĞµÄ×Ö·û´®ÊıÁ¿ 3-°üº¬Ô´´úÂëµÄ×Ö·û´®Ö¸Õë 4-³¤¶ÈÊı×é
+	//è°ƒç”¨glShaderSource()å‡½æ•°ï¼Œç”¨äºå°†GLSLä»£ç ä»å­—ç¬¦ä¸²è½½å…¥ç©ºç€è‰²å™¨å¯¹è±¡ä¸­ï¼Œä¹‹ååœ¨ä½¿ç”¨glCompilShader()å‡½æ•°ç¼–è¯‘å„ç€è‰²å™¨
+	//glShaderSourceéœ€è¦ä¼ å…¥4ä¸ªå‚æ•°ï¼Œ1-ç”¨æ¥å­˜æ”¾ç€è‰²å™¨å¯¹è±¡ï¼Œ2-ç€è‰²å™¨æºä»£ç ä¸­çš„å­—ç¬¦ä¸²æ•°é‡ 3-åŒ…å«æºä»£ç çš„å­—ç¬¦ä¸²æŒ‡é’ˆ 4-é•¿åº¦æ•°ç»„
 	glShaderSource(vShader, 1, &vertShaderSrc, NULL);
 	glShaderSource(fShader, 1, &fragShaderSrc, NULL);
-	//±àÒë×ÅÉ«Æ÷
+	//ç¼–è¯‘ç€è‰²å™¨
 	glCompileShader(vShader);
 	glCompileShader(fShader);
 
-	//¼ÓÈë³ÌĞò¶ÔÏó
+	//åŠ å…¥ç¨‹åºå¯¹è±¡
 	glAttachShader(vfprogram, vShader);
 	glAttachShader(vfprogram, fShader);
-	//ÇëÇóGLSL±àÒëÆ÷È·±£¼æÈİĞÔ
+	//è¯·æ±‚GLSLç¼–è¯‘å™¨ç¡®ä¿å…¼å®¹æ€§
 	glLinkProgram(vfprogram);
 
 	return vfprogram;
@@ -59,7 +61,7 @@ GLuint createShaderProgram()
 void init(GLFWwindow* window)
 {
 	renderingProgram = createShaderProgram();
-	//´´½¨OpenGLĞèÒªµÄ»º³åÇø
+	//åˆ›å»ºOpenGLéœ€è¦çš„ç¼“å†²åŒº
 	glGenVertexArrays(numVAOs, vao);
 	glBindVertexArray(vao[0]);
 }
@@ -77,14 +79,14 @@ void main()
 		exit(EXIT_FAILURE);
 	}
 
-	//windowHintÖ¸¶¨»úÆ÷±ØĞëÓëOpenGL°æ±¾¼æÈİ4.3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);		//Ö÷°æ±¾ºÅ
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);		//´Î°æ±¾ºÅ
+	//windowHintæŒ‡å®šæœºå™¨å¿…é¡»ä¸OpenGLç‰ˆæœ¬å…¼å®¹4.3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);		//ä¸»ç‰ˆæœ¬å·
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);		//æ¬¡ç‰ˆæœ¬å·
 
-	//¶¨Òå´°¿ÚµÄ³¤¿í³ß´ç£¬µÚÒ»¸ö²ÎÊı±íÊ¾ÁË¿í£¬µÚ¶ş¸ö²ÎÊı±íÊ¾¸ß£¬µÚÈı¸ö²ÎÊı±íÊ¾´°¿ÚÃû³Æ
+	//å®šä¹‰çª—å£çš„é•¿å®½å°ºå¯¸ï¼Œç¬¬ä¸€ä¸ªå‚æ•°è¡¨ç¤ºäº†å®½ï¼Œç¬¬äºŒä¸ªå‚æ•°è¡¨ç¤ºé«˜ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°è¡¨ç¤ºçª—å£åç§°
 	GLFWwindow* window = glfwCreateWindow(600, 600, "Triangle", NULL, NULL);
 
-	//´´½¨GLFW´°¿Ú²¢²»»á×Ô¶¯½«ËüÓëµ±Ç°OpenGLÉÏÏÂÎÄ¹ØÁª£¬ĞèÒªµ÷ÓÃglfwMakeContextCurrent()
+	//åˆ›å»ºGLFWçª—å£å¹¶ä¸ä¼šè‡ªåŠ¨å°†å®ƒä¸å½“å‰OpenGLä¸Šä¸‹æ–‡å…³è”ï¼Œéœ€è¦è°ƒç”¨glfwMakeContextCurrent()
 	glfwMakeContextCurrent(window);
 
 	if (glewInit() != GLEW_OK)
@@ -95,12 +97,12 @@ void main()
 
 	init(window);
 
-	//äÖÈ¾Ñ­»·
+	//æ¸²æŸ“å¾ªç¯
 	while (!glfwWindowShouldClose(window))
 	{
 		display(window, glfwGetTime());
 
-		//ºóÖÃ»º»º³åÇøÓëÇ°ÖÃ»º³åÇø½»»»
+		//åç½®ç¼“ç¼“å†²åŒºä¸å‰ç½®ç¼“å†²åŒºäº¤æ¢
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

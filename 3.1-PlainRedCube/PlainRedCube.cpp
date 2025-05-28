@@ -1,4 +1,4 @@
-using namespace std;
+ï»¿using namespace std;
 #include <iostream>
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -10,9 +10,9 @@ using namespace std;
 #include <glm/gtc/matrix_transform.hpp>
 #include "Utils.h"
 
-//¶¨Òå¶¥µãÊı×é¶ÔÏó
+//å®šä¹‰é¡¶ç‚¹æ•°ç»„å¯¹è±¡
 #define numVAOs 1
-//¶¨Òå¶¥µã»º³å¶ÔÏó
+//å®šä¹‰Bufferç¼“å†²å¯¹è±¡
 #define numVBOs 2
 
 Utils util = Utils();
@@ -23,16 +23,16 @@ GLuint renderingProgram;
 GLuint vao[numVAOs];
 GLuint vbo[numVBOs];
 
-//·ÖÅäÔÚdisplay()º¯ÊıÖĞÊ¹ÓÃµÄ±äÁ¿¿Õ¼ä£¬ÕâÑùËûÃÇ¾Í²»±ØÔÙäÖÈ¾¹ı³ÌÖĞ·ÖÅä
+//åˆ†é…åœ¨display()å‡½æ•°ä¸­ä½¿ç”¨çš„å˜é‡ç©ºé—´ï¼Œè¿™æ ·ä»–ä»¬å°±ä¸å¿…å†æ¸²æŸ“è¿‡ç¨‹ä¸­åˆ†é…
 GLuint mvLoc, projLoc;
 int width, height;
 float aspect;
-glm::mat4 pMat, vMat, mMat , mvMat;  //¶¨Òå v¾ØÕó£¨ÊÓÍ¼¾ØÕó),p¾ØÕó£¨Í¶Ó°¾ØÕó£©,mv¾ØÕó£¨Ä£ĞÍ-ÊÓÍ¼¾ØÕó£©
+glm::mat4 pMat, vMat, mMat , mvMat;  //å®šä¹‰ vçŸ©é˜µï¼ˆè§†å›¾çŸ©é˜µ),pçŸ©é˜µï¼ˆæŠ•å½±çŸ©é˜µï¼‰,mvçŸ©é˜µï¼ˆæ¨¡å‹-è§†å›¾çŸ©é˜µï¼‰
 
-//ÉùÃ÷Ò»¸öÃûÎªsetupVerticesµÄÊı×é£¬°üº¬36¸ö×é³ÉÁ¢·½ÌåµÄ¶¥µã
+//å£°æ˜ä¸€ä¸ªåä¸ºsetupVerticesçš„æ•°ç»„ï¼ŒåŒ…å«36ä¸ªç»„æˆç«‹æ–¹ä½“çš„é¡¶ç‚¹
 void setupVertices(void)
 {
-	//Ã¿3¸ö¶¥µã¹¹³ÉÒ»¸öÈı½ÇĞÎ£¬Ò»¸öÕı·½ĞÎÓĞ12¸öÈı½ÇĞÎ£¬Òò´Ë×Ü¶¥µãÊıÓĞ3*3*12 = 108£¬»ùÓÚÈı½ÇÃæµÄ¹¹³ÉÓëĞòºÅºÍË³ĞòÓĞ¹Ø£¬Òò´ËÆäÖĞ²¿·ÖµÄÎ»ÖÃÊÇÖØ¸´
+	//æ¯3ä¸ªé¡¶ç‚¹æ„æˆä¸€ä¸ªä¸‰è§’å½¢ï¼Œä¸€ä¸ªæ­£æ–¹å½¢æœ‰12ä¸ªä¸‰è§’å½¢ï¼Œå› æ­¤æ€»é¡¶ç‚¹æ•°æœ‰3*3*12 = 108ï¼ŒåŸºäºä¸‰è§’é¢çš„æ„æˆä¸åºå·å’Œé¡ºåºæœ‰å…³ï¼Œå› æ­¤å…¶ä¸­éƒ¨åˆ†çš„ä½ç½®æ˜¯é‡å¤
 	float vertexPositions[108] =
 	{
 		-1.0f,  1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f,
@@ -49,19 +49,19 @@ void setupVertices(void)
 		1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f, -1.0f
 	};
 
-	//´´½¨VAO£¬°ó¶¨VAO£¬ÕâÑùÉú³ÉµÄ»º³åÇø¾Í»áºÍÕâ¸öVAOÏà¹ØÁª
+	//åˆ›å»ºVAOï¼Œç»‘å®šVAOï¼Œè¿™æ ·ç”Ÿæˆçš„ç¼“å†²åŒºå°±ä¼šå’Œè¿™ä¸ªVAOç›¸å…³è”
 	glGenVertexArrays(1, vao);
 	glBindVertexArray(vao[0]);
-	//´´½¨VBO¡¢°ó¶¨VBO
+	//åˆ›å»ºVBOã€ç»‘å®šVBO
 	glGenBuffers(numVBOs, vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	//½«°üº¬¶¥µãÊı¾İµÄÊı×é¸³Öµ½ø»îÔ¾»º³åÇø£¨ÕâÀïÓ¦¸ÃÊÇµÚ0¸öVBO£©
+	//å°†åŒ…å«é¡¶ç‚¹æ•°æ®çš„æ•°ç»„èµ‹å€¼è¿›æ´»è·ƒç¼“å†²åŒºï¼ˆè¿™é‡Œåº”è¯¥æ˜¯ç¬¬0ä¸ªVBOï¼‰
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
 };
 
 void init(GLFWwindow* window)
 {
-	//äÖÈ¾³ÌĞò£¬µ÷ÓÃÁËUtilsÀïÃæ·â×°ºÃµÄ¶¥µã¡¢Æ¬¶Î×ÅÉ«Æ÷
+	//æ¸²æŸ“ç¨‹åºï¼Œè°ƒç”¨äº†Utilsé‡Œé¢å°è£…å¥½çš„é¡¶ç‚¹ã€ç‰‡æ®µç€è‰²å™¨
 	renderingProgram = Utils::createShaderProgram("vertShader.glsl" , "fragShader.glsl"); 
 
 	cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
@@ -71,40 +71,40 @@ void init(GLFWwindow* window)
 
 void display(GLFWwindow* window , double currentTime)
 {
-	//Ã¿Ö¡Ö®Ç°Çå³ıÉî¶È»º³åÇø
+	//æ¯å¸§ä¹‹å‰æ¸…é™¤æ·±åº¦ç¼“å†²åŒº
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	//Ê¹ÓÃglUseProgram()º¯ÊıÀ´ÆôÓÃ×ÅÉ«Æ÷
+	//ä½¿ç”¨glUseProgram()å‡½æ•°æ¥å¯ç”¨ç€è‰²å™¨
 	glUseProgram(renderingProgram);
 
-	//»ñÈ¡MV¾ØÕóºÍÍ¶Ó°¾ØÕóµÄÍ³Ò»±äÁ¿
+	//è·å–MVçŸ©é˜µå’ŒæŠ•å½±çŸ©é˜µçš„ç»Ÿä¸€å˜é‡
 	mvLoc = glGetUniformLocation(renderingProgram, "mv_matrix");
 	projLoc = glGetUniformLocation(renderingProgram, "proj_matrix");
 
-	//¹¹½¨Í¸ÊÓ¾ØÕó
+	//æ„å»ºé€è§†çŸ©é˜µ
 	glfwGetFramebufferSize(window, &width, &height);
 	aspect = (float)width / (float)height;
 	pMat = glm::perspective(1.0472f, aspect, 0.1f, 1000.0f);   //1.0472 radians = 60 degrees  glm::perspective(<filed of view> , <aspect ratio> , <near plane>)
 
-	//¹¹½¨ÊÓÍ¼¾ØÕó¡¢Ä£ĞÍ¾ØÕóºÍÊÓÍ¼-Ä£ĞÍ¾ØÕó
+	//æ„å»ºè§†å›¾çŸ©é˜µã€æ¨¡å‹çŸ©é˜µå’Œè§†å›¾-æ¨¡å‹çŸ©é˜µ
 	vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));
 	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(cubeLocX, cubeLocY, cubeLocZ));
 	mvMat = vMat * mMat;
 
-	//½«Í¸ÊÓ¾ØÕóºÍMV¾ØÕó¸´ÖÆ¸øÏàÓ¦µÄÍ³Ò»±äÁ¿
+	//å°†é€è§†çŸ©é˜µå’ŒMVçŸ©é˜µå¤åˆ¶ç»™ç›¸åº”çš„ç»Ÿä¸€å˜é‡
 	glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
 
-	//½«VBO¹ØÁª¸ø¶¥µã×ÅÉ«Æ÷ÖĞÏàÓ¦µÄ¶¥µãÊôĞÔ
+	//å°†VBOå…³è”ç»™é¡¶ç‚¹ç€è‰²å™¨ä¸­ç›¸åº”çš„é¡¶ç‚¹å±æ€§
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glVertexAttribPointer(0, 3 , GL_FLOAT , GL_FALSE, 0 , 0);
 	glEnableVertexAttribArray(0);
 
-	//µ÷ÕûOpenGLÉèÖÃ£¬»æÖÆÄ£ĞÍ
+	//è°ƒæ•´OpenGLè®¾ç½®ï¼Œç»˜åˆ¶æ¨¡å‹
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	//Display()º¯Êı×öµÃ×îºóÒ»¼şÊÂ¾ÍÊÇÍ¨¹ıµ÷ÓÃglDrawArrays()À´»æÖÆÄ£ĞÍ£¬Ö¸¶¨Ä£ĞÍµÄ×é³É·½Ê½(Èı½ÇĞÎ),²¢ÉèÖÃ¶¥µãÊı¡£
+	//Display()å‡½æ•°åšå¾—æœ€åä¸€ä»¶äº‹å°±æ˜¯é€šè¿‡è°ƒç”¨glDrawArrays()æ¥ç»˜åˆ¶æ¨¡å‹ï¼ŒæŒ‡å®šæ¨¡å‹çš„ç»„æˆæ–¹å¼(ä¸‰è§’å½¢),å¹¶è®¾ç½®é¡¶ç‚¹æ•°ã€‚
 	glDrawArrays(GL_TRIANGLES, 0, 36);				
 
 }
@@ -125,10 +125,10 @@ int main(void)
 
 	glfwSwapInterval(1);
 
-	//Ö´ĞĞ³õÊ¼»¯º¯Êı£¬ĞèÒª´«windowµÄ²ÎÊı½øÀ´
+	//æ‰§è¡Œåˆå§‹åŒ–å‡½æ•°ï¼Œéœ€è¦ä¼ windowçš„å‚æ•°è¿›æ¥
 	init(window);
 
-	//äÖÈ¾Ñ­»·
+	//æ¸²æŸ“å¾ªç¯
 	while (!glfwWindowShouldClose(window))
 	{
 		display(window, glfwGetTime());

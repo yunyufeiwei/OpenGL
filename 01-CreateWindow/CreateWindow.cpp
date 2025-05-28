@@ -1,38 +1,64 @@
-using namespace std;
+ï»¿using namespace std;
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <iostream>
 
-//¶¨Òå´°¿ÚµÄº¯Êı
+//å®šä¹‰çª—å£çš„å‡½æ•°
 void init(GLFWwindow* window) { }
 
-//¶¨Òå´°¿ÚÏÔÊ¾×´Ì¬
+//å®šä¹‰çª—å£æ˜¾ç¤ºçŠ¶æ€
 void display(GLFWwindow* window, double currentTime) 
 {
-	//Ö¸¶¨Çå³ı±³¾°Ê±Ê¹ÓÃµÄÑÕÉ«£¬Ä©Î²1±íÊ¾²»Í¸Ã÷¶È
+	//æŒ‡å®šæ¸…é™¤èƒŒæ™¯æ—¶ä½¿ç”¨çš„é¢œè‰²ï¼Œæœ«å°¾1è¡¨ç¤ºä¸é€æ˜åº¦
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-	//Êµ¼ÊÊ¹ÓÃÊäÈëÑÕÉ«¶ÔÑÕÉ«»º³åÇø½øĞĞÌî³ä
+	//å®é™…ä½¿ç”¨è¾“å…¥é¢œè‰²å¯¹é¢œè‰²ç¼“å†²åŒºè¿›è¡Œå¡«å……
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 int main(void) 
 {
-	//glfwInit()º¯ÊıÊÇÒ»¸öIntÀàĞÍµÄÎŞ·µ»ØÖµµÄ
-	//Èç¹ûglfwÃ»ÓĞ³õÊ¼»¯£¬ÄÇÃ´¾ÍÖ´ĞĞexitÖĞµÄEXIT_FAILURE,¶ø#define EXIT_FAILURE 1£¬Òò´ËglfwInit()ÓÖ±ä³ÉÁË1
+	//glfwInit()å‡½æ•°æ˜¯ä¸€ä¸ªIntç±»å‹çš„æ— è¿”å›å€¼çš„
+	//å¦‚æœglfwæ²¡æœ‰åˆå§‹åŒ–ï¼Œé‚£ä¹ˆå°±æ‰§è¡Œexitä¸­çš„EXIT_FAILURE,è€Œ#define EXIT_FAILURE 1ï¼Œå› æ­¤glfwInit()åˆå˜æˆäº†1
 	if (!glfwInit())
 	{
 		exit(EXIT_FAILURE);
 	}	
 
-	//windowHintÖ¸¶¨»úÆ÷±ØĞëÓëOpenGL°æ±¾¼æÈİ4.3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);		//Ö÷°æ±¾ºÅ
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);		//´Î°æ±¾ºÅ
+	//windowHintæŒ‡å®šæœºå™¨å¿…é¡»ä¸OpenGLç‰ˆæœ¬å…¼å®¹4.3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);		//ä¸»ç‰ˆæœ¬å·
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);		//æ¬¡ç‰ˆæœ¬å·
 
-	//glfwCreateWindow()ÃüÁî¸ºÔğ´´½¨GLFW´°¿Ú£¬²ÎÊı¶¨Òå´°¿ÚµÄ³¤¿í³ß´ç£¬µÚÒ»¸ö²ÎÊı±íÊ¾ÁË¿í£¬µÚ¶ş¸ö²ÎÊı±íÊ¾¸ß£¬µÚÈı¸ö²ÎÊı±íÊ¾´°¿ÚÃû³Æ,
-	GLFWwindow* window = glfwCreateWindow(600, 600, "Create Window", NULL, NULL);	
 
-	//´´½¨GLFW´°¿Ú²¢²»»á×Ô¶¯½«ËüÓëµ±Ç°OpenGLÉÏÏÂÎÄ¹ØÁª£¬ĞèÒªµ÷ÓÃglfwMakeContextCurrent()
+
+	//é»˜è®¤çª—å£ä½ç½®ç‰ˆæœ¬ï¼ˆæ–¹æ¡ˆä¸€ï¼‰
+	//glfwCreateWindow()å‘½ä»¤è´Ÿè´£åˆ›å»ºGLFWçª—å£ï¼Œå‚æ•°å®šä¹‰çª—å£çš„é•¿å®½å°ºå¯¸ï¼Œç¬¬ä¸€ä¸ªå‚æ•°è¡¨ç¤ºäº†å®½ï¼Œç¬¬äºŒä¸ªå‚æ•°è¡¨ç¤ºé«˜ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°è¡¨ç¤ºçª—å£åç§°,
+	//GLFWwindow* window = glfwCreateWindow(600, 600, "Create Window", NULL, NULL);	
+
+	///StratModification-----------------------------
+	
+	//è‡ªå®šä¹‰çª—å£ä½ç½®ç‰ˆæœ¬ï¼ˆæ–¹æ¡ˆäºŒï¼‰
+	const int windowWidth = 600;
+	const int windowHeight = 600;
+
+	// è·å–ä¸»æ˜¾ç¤ºå™¨çš„å·¥ä½œåŒºå¤§å°ï¼ˆæ’é™¤ä»»åŠ¡æ ï¼‰
+	GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+	int screenWidth, screenHeight;
+	glfwGetMonitorWorkarea(primaryMonitor, nullptr, nullptr, &screenWidth, &screenHeight);
+
+	// è®¡ç®—çª—å£å·¦ä¸Šè§’çš„ä½ç½®ï¼Œä½¿çª—å£å±…ä¸­
+	int windowPosX = (screenWidth - windowWidth) / 2;
+	int windowPosY = (screenHeight - windowHeight) / 2;
+
+	// åˆ›å»ºçª—å£
+	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Centered Window", NULL, NULL);
+	// è®¾ç½®çª—å£ä½ç½®ï¼ˆå±…ä¸­ï¼‰
+	glfwSetWindowPos(window, windowPosX, windowPosY);
+	
+	///EndModification-----------------------------
+
+
+	//åˆ›å»ºGLFWçª—å£å¹¶ä¸ä¼šè‡ªåŠ¨å°†å®ƒä¸å½“å‰OpenGLä¸Šä¸‹æ–‡å…³è”ï¼Œéœ€è¦è°ƒç”¨glfwMakeContextCurrent()
 	glfwMakeContextCurrent(window);
 
 	if (glewInit() != GLEW_OK)
@@ -44,16 +70,16 @@ int main(void)
 	init(window);
 
 
-	//äÖÈ¾Ñ­»·
+	//æ¸²æŸ“å¾ªç¯
 	while (!glfwWindowShouldClose(window))
 	{
-		//Ö´ĞĞÏÔÊ¾º¯Êı
+		//æ‰§è¡Œæ˜¾ç¤ºå‡½æ•°
 		display(window, glfwGetTime());
 
-		//ºóÖÃ»º»º³åÇøÓëÇ°ÖÃ»º³åÇø½»»»
+		//åç½®ç¼“ç¼“å†²åŒºä¸å‰ç½®ç¼“å†²åŒºäº¤æ¢
 		glfwSwapBuffers(window);
 
-		//´¦Àí´°¿ÚÏà¹ØÊÂ¼ş£¨Èç°¸¼şÊÂ¼ş£©
+		//å¤„ç†çª—å£ç›¸å…³äº‹ä»¶ï¼ˆå¦‚æ¡ˆä»¶äº‹ä»¶ï¼‰
 		glfwPollEvents();
 	}
 
